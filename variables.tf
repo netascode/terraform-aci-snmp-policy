@@ -118,10 +118,10 @@ variable "clients" {
     name          = string
     mgmt_epg      = optional(string)
     mgmt_epg_name = optional(string)
-    entries = list(object({
+    entries = optional(list(object({
       ip   = string
       name = string
-    }))
+    })))
   }))
   default = []
 

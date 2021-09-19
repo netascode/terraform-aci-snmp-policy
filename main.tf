@@ -1,7 +1,7 @@
 locals {
   entries = flatten([
     for client in var.clients : [
-      for entry in client.entries : {
+      for entry in coalesce(client.entries, []) : {
         key = "${client.name}/${entry.name}"
         value = {
           client_rn = "clgrp-${client.name}"
