@@ -3,14 +3,14 @@ version: '>= 0.14.0'
 formatter: markdown table
 
 content: |-
-  [![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+  [![Tests](https://github.com/netascode/terraform-aci-snmp-policy/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-snmp-policy/actions/workflows/test.yml)
 
-  # Terraform ACI Scaffolding Module
+  # Terraform ACI SNMP Policy Module
 
-  Description
+  Manages ACI SNMP Policy
 
   Location in GUI:
-  `Tenants` » `XXX`
+  `Fabric Policies` » `Policies` » `Pod` » `SNMP`
 
   ## Examples
 
