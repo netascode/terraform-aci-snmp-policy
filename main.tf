@@ -70,11 +70,11 @@ resource "aci_rest" "snmpClientGrpP" {
 }
 
 resource "aci_rest" "snmpRsEpg" {
-  for_each   = { for client in var.clients : client.name => client if client.mgmt_epg != null && client.mgmt_epg_name != null }
+  for_each   = { for client in var.clients : client.name => client if client.mgmt_epg_name != null }
   dn         = "${aci_rest.snmpClientGrpP[each.value.name].id}/rsepg"
   class_name = "snmpRsEpg"
   content = {
-    tDn = each.value.mgmt_epg == "oob" ? "uni/tn-mgmt/mgmtp-default/oob-${each.value.mgmt_epg_name}" : "uni/tn-mgmt/mgmtp-default/inb-${each.value.mgmt_epg_name}"
+    tDn = each.value.mgmt_epg_type == "oob" ? "uni/tn-mgmt/mgmtp-default/oob-${each.value.mgmt_epg_name}" : "uni/tn-mgmt/mgmtp-default/inb-${each.value.mgmt_epg_name}"
   }
 }
 

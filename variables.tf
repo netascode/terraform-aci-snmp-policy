@@ -113,10 +113,10 @@ variable "trap_forwarders" {
 }
 
 variable "clients" {
-  description = "List of clients. Choices `mgmt_epg`: `inb`, `oob`."
+  description = "List of clients. Choices `mgmt_epg_type`: `inb`, `oob`. Default value `mgmt_epg_type`: `inb`."
   type = list(object({
     name          = string
-    mgmt_epg      = optional(string)
+    mgmt_epg_type = optional(string)
     mgmt_epg_name = optional(string)
     entries = optional(list(object({
       ip   = string
@@ -134,9 +134,9 @@ variable "clients" {
 
   validation {
     condition = alltrue([
-      for c in var.clients : c.mgmt_epg == null || try(contains(["inb", "oob"], c.mgmt_epg), false)
+      for c in var.clients : c.mgmt_epg_type == null || try(contains(["inb", "oob"], c.mgmt_epg_type), false)
     ])
-    error_message = "`mgmt_epg`: Allowed values are `inb` or `oob`."
+    error_message = "`mgmt_epg_type`: Allowed values are `inb` or `oob`."
   }
 
   validation {

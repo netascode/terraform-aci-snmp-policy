@@ -14,7 +14,7 @@ Note that this example will create resources. Resources can be destroyed with `t
 ```hcl
 module "aci_snmp_policy" {
   source  = "netascode/snmp-policy/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.0.2"
 
   name        = "SNMP1"
   admin_state = true
@@ -34,7 +34,7 @@ module "aci_snmp_policy" {
   }]
   clients = [{
     name          = "CLIENT1"
-    mgmt_epg      = "oob"
+    mgmt_epg_type = "oob"
     mgmt_epg_name = "OOB1"
     entries = [{
       ip   = "10.1.1.1"

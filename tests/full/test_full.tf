@@ -32,7 +32,7 @@ module "main" {
   }]
   clients = [{
     name          = "CLIENT1"
-    mgmt_epg      = "oob"
+    mgmt_epg_type = "oob"
     mgmt_epg_name = "OOB1"
     entries = [{
       ip   = "10.1.1.1"
