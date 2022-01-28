@@ -13,7 +13,7 @@ locals {
   ])
 }
 
-resource "aci_rest" "snmpPol" {
+resource "aci_rest_managed" "snmpPol" {
   dn         = "uni/fabric/snmppol-${var.name}"
   class_name = "snmpPol"
   content = {
@@ -24,9 +24,9 @@ resource "aci_rest" "snmpPol" {
   }
 }
 
-resource "aci_rest" "snmpUserP" {
+resource "aci_rest_managed" "snmpUserP" {
   for_each   = { for user in var.users : user.name => user }
-  dn         = "${aci_rest.snmpPol.dn}/user-${each.value.name}"
+  dn         = "${aci_rest_managed.snmpPol.dn}/user-${each.value.name}"
   class_name = "snmpUserP"
   content = {
     name     = each.value.name
@@ -41,18 +41,18 @@ resource "aci_rest" "snmpUserP" {
   }
 }
 
-resource "aci_rest" "snmpCommunityP" {
+resource "aci_rest_managed" "snmpCommunityP" {
   for_each   = toset(var.communities)
-  dn         = "${aci_rest.snmpPol.dn}/community-${each.value}"
+  dn         = "${aci_rest_managed.snmpPol.dn}/community-${each.value}"
   class_name = "snmpCommunityP"
   content = {
     name = each.value
   }
 }
 
-resource "aci_rest" "snmpTrapFwdServerP" {
+resource "aci_rest_managed" "snmpTrapFwdServerP" {
   for_each   = { for trap in var.trap_forwarders : trap.ip => trap }
-  dn         = "${aci_rest.snmpPol.dn}/trapfwdserver-[${each.value.ip}]"
+  dn         = "${aci_rest_managed.snmpPol.dn}/trapfwdserver-[${each.value.ip}]"
   class_name = "snmpTrapFwdServerP"
   content = {
     addr = each.value.ip
@@ -60,27 +60,27 @@ resource "aci_rest" "snmpTrapFwdServerP" {
   }
 }
 
-resource "aci_rest" "snmpClientGrpP" {
+resource "aci_rest_managed" "snmpClientGrpP" {
   for_each   = { for client in var.clients : client.name => client }
-  dn         = "${aci_rest.snmpPol.dn}/clgrp-${each.value.name}"
+  dn         = "${aci_rest_managed.snmpPol.dn}/clgrp-${each.value.name}"
   class_name = "snmpClientGrpP"
   content = {
     name = each.value.name
   }
 }
 
-resource "aci_rest" "snmpRsEpg" {
+resource "aci_rest_managed" "snmpRsEpg" {
   for_each   = { for client in var.clients : client.name => client if client.mgmt_epg_name != null }
-  dn         = "${aci_rest.snmpClientGrpP[each.value.name].dn}/rsepg"
+  dn         = "${aci_rest_managed.snmpClientGrpP[each.value.name].dn}/rsepg"
   class_name = "snmpRsEpg"
   content = {
     tDn = each.value.mgmt_epg_type == "oob" ? "uni/tn-mgmt/mgmtp-default/oob-${each.value.mgmt_epg_name}" : "uni/tn-mgmt/mgmtp-default/inb-${each.value.mgmt_epg_name}"
   }
 }
 
-resource "aci_rest" "snmpClientP" {
+resource "aci_rest_managed" "snmpClientP" {
   for_each   = { for entry in local.entries : entry.key => entry.value }
-  dn         = "${aci_rest.snmpPol.dn}/${each.value.client_rn}/client-[${each.value.ip}]"
+  dn         = "${aci_rest_managed.snmpPol.dn}/${each.value.client_rn}/client-[${each.value.ip}]"
   class_name = "snmpClientP"
   content = {
     addr = each.value.ip
