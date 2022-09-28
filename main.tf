@@ -30,10 +30,10 @@ resource "aci_rest_managed" "snmpUserP" {
   class_name = "snmpUserP"
   content = {
     name     = each.value.name
-    privType = each.value.privacy_type != null ? each.value.privacy_type : "none"
+    privType = each.value.privacy_type
     privKey  = each.value.privacy_type != null && each.value.privacy_type != "none" ? each.value.privacy_key : null
-    authType = each.value.authorization_type != null ? each.value.authorization_type : "hmac-md5-96"
-    authKey  = each.value.authorization_key != null ? each.value.authorization_key : ""
+    authType = each.value.authorization_type
+    authKey  = each.value.authorization_key
   }
 
   lifecycle {
@@ -56,7 +56,7 @@ resource "aci_rest_managed" "snmpTrapFwdServerP" {
   class_name = "snmpTrapFwdServerP"
   content = {
     addr = each.value.ip
-    port = each.value.port != null ? each.value.port : 162
+    port = each.value.port
   }
 }
 

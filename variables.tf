@@ -53,10 +53,10 @@ variable "users" {
   description = "List of users. Choices `privacy_type`: `none`, `des`, `aes-128`. Default value `privacy_type`: `none`. `privacy_key`: Minimum characters: 8. Maximum characters: 130. Choices `authorization_type`: `hmac-md5-96`, `hmac-sha1-96`. Default value `authorization_type`: `mac-md5-96`. `authorization_key`: Minimum characters: 8. Maximum characters: 130."
   type = list(object({
     name               = string
-    privacy_type       = optional(string)
+    privacy_type       = optional(string, "none")
     privacy_key        = optional(string)
-    authorization_type = optional(string)
-    authorization_key  = optional(string)
+    authorization_type = optional(string, "hmac-md5-96")
+    authorization_key  = optional(string, "")
   }))
   default = []
 
@@ -100,7 +100,7 @@ variable "trap_forwarders" {
   description = "List of trap forwarders. Allowed values `port`: 0-65535. Default value `port`: 162."
   type = list(object({
     ip   = string
-    port = optional(number)
+    port = optional(number, 162)
   }))
   default = []
 
@@ -116,12 +116,12 @@ variable "clients" {
   description = "List of clients. Choices `mgmt_epg_type`: `inb`, `oob`. Default value `mgmt_epg_type`: `inb`."
   type = list(object({
     name          = string
-    mgmt_epg_type = optional(string)
+    mgmt_epg_type = optional(string, "inb")
     mgmt_epg_name = optional(string)
     entries = optional(list(object({
       ip   = string
       name = string
-    })))
+    })), [])
   }))
   default = []
 
