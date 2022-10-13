@@ -4,9 +4,9 @@ locals {
       for entry in coalesce(client.entries, []) : {
         key = "${client.name}/${entry.name}"
         value = {
-          client_rn = "clgrp-${client.name}"
-          ip        = entry.ip
-          name      = entry.name
+          client = client.name
+          ip     = entry.ip
+          name   = entry.name
         }
       }
     ]
@@ -80,7 +80,7 @@ resource "aci_rest_managed" "snmpRsEpg" {
 
 resource "aci_rest_managed" "snmpClientP" {
   for_each   = { for entry in local.entries : entry.key => entry.value }
-  dn         = "${aci_rest_managed.snmpPol.dn}/${each.value.client_rn}/client-[${each.value.ip}]"
+  dn         = "${aci_rest_managed.snmpClientGrpP[each.value.client].dn}/client-[${each.value.ip}]"
   class_name = "snmpClientP"
   content = {
     addr = each.value.ip
