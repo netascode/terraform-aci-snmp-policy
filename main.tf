@@ -31,9 +31,9 @@ resource "aci_rest_managed" "snmpUserP" {
   content = {
     name     = each.value.name
     privType = each.value.privacy_type
-    privKey  = each.value.privacy_type != null && each.value.privacy_type != "none" ? each.value.privacy_key : null
+    privKey  = sensitive(each.value.privacy_type != null && each.value.privacy_type != "none" ? each.value.privacy_key : null)
     authType = each.value.authorization_type
-    authKey  = each.value.authorization_key
+    authKey  = sensitive(each.value.authorization_key)
   }
 
   lifecycle {
