@@ -1,4 +1,4 @@
-## 0.2.2 (unreleased)
+## 0.2.2
 
 - Make the `privacy_key` and `authorization_key` variable sensitive
 
