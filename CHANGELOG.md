@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Make the `privacy_key` and `authorization_key` variable sensitive
+
 ## 0.2.1
 
 - Fix client entry dependencies
