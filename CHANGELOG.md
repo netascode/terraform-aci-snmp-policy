@@ -1,4 +1,4 @@
-## 0.2.3 (unreleased)
+## 0.2.3
 
 - Support additional values for `authorization_type` attribute of `users`
 
