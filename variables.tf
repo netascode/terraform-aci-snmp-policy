@@ -50,7 +50,7 @@ variable "communities" {
 }
 
 variable "users" {
-  description = "List of users. Choices `privacy_type`: `none`, `des`, `aes-128`. Default value `privacy_type`: `none`. `privacy_key`: Minimum characters: 8. Maximum characters: 130. Choices `authorization_type`: `hmac-md5-96`, `hmac-sha1-96`. Default value `authorization_type`: `mac-md5-96`. `authorization_key`: Minimum characters: 8. Maximum characters: 130."
+  description = "List of users. Choices `privacy_type`: `none`, `des`, `aes-128`. Default value `privacy_type`: `none`. `privacy_key`: Minimum characters: 8. Maximum characters: 130. Choices `authorization_type`: `hmac-md5-96`, `hmac-sha1-96`, `hmac-sha2-224`, `hmac-sha2-256`, `hmac-sha2-384`, `hmac-sha2-512`. Default value `authorization_type`: `mac-md5-96`. `authorization_key`: Minimum characters: 8. Maximum characters: 130."
   type = list(object({
     name               = string
     privacy_type       = optional(string, "none")
@@ -83,7 +83,7 @@ variable "users" {
 
   validation {
     condition = alltrue([
-      for u in var.users : u.authorization_type == null || try(contains(["hmac-md5-96", "hmac-sha1-96"], u.authorization_type), false)
+      for u in var.users : u.authorization_type == null || try(contains(["hmac-md5-96", "hmac-sha1-96", "hmac-sha2-224", "hmac-sha2-256", "hmac-sha2-384", "hmac-sha2-512"], u.authorization_type), false)
     ])
     error_message = "`authorization_type`: Allowed values are `hmac-md5-96` or `hmac-sha1-96`."
   }
