@@ -1,3 +1,7 @@
+## 0.2.3 (unreleased)
+
+- Support additional values for `authorization_type` attribute of `users`
+
 ## 0.2.2
 
 - Make the `privacy_key` and `authorization_key` variable sensitive
